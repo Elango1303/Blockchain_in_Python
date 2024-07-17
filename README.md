@@ -3,11 +3,14 @@
 
 
 
-# How to run the code
+# How to run the code(USE CMD)
 
-1. To start a blockchain node, go to ```blockchain``` folder and execute the command below:
-```python blockchain.py -p 5000```
-2. You can add a new node to blockchain by executing the same command and specifying a port that is not already used. For example, ```python blockchain.py -p 5001```
-3. TO start the blockchain client, go to ```blockchain_client``` folder and execute the command below:
-```python blockchain_client.py -p 8080```
-4. You can access the blockchain frontend and blockchain client dashboards from your browser by going to localhost:5000 and localhost:8080
+1. STEP 1:
+            D:\blockchain> ```python blockchain.py -p 5000```
+2. STEP 2:( for new node adding)
+            D:\blockchain> ```python blockchain.py -p 5001```
+3.STEP 3:
+            D:\blockchain_client>  ```python blockchain_client.py -p 8080```
+4.STEP 4:
+            URL for blockchain: localhost:5000
+            URL for blockchain_ckienr: localhost:8080
