@@ -95,17 +95,20 @@
 
 
     <script>
-
       $(function(){
-
-        
         $('#view_transactions').click(function(){
-
+          // First, check if DataTable exists and destroy it if it does
+          if ($.fn.dataTable.isDataTable('#transactions_table')) {
+            $('#transactions_table').DataTable().destroy();
+          }
+          
+          // Clear the table contents
+          $('#transactions_table').empty();
+          
           $.ajax({
             url: document.getElementById("node_url").value + "/chain",
             type: 'GET',
             success: function(response){
-
               console.log(response);
               //Generate Transactions Table
               var transactions = [];
@@ -113,9 +116,8 @@
 
               for (i = 1; i < response.length; i++) { 
                 for (j = 0; j < response["chain"][i]["transactions"].length; j++) {
-
                   //format date 
-                  var options = {  year: "numeric", month: "short",  day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit"  };
+                  var options = {year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit"};
                   var date = new Date(response["chain"][i]["timestamp"] * 1000);
                   var formattedDateTime = date.toLocaleTimeString("en-us", options);
 
@@ -131,34 +133,25 @@
                 };
               };
 
-              // Restrict a column to 10 characters, do split words
-                $('#transactions_table').dataTable( {
-                  data: transactions,
-                  columns: [{ title: "#" },
-                            { title: "Recipient Address"},
-                            { title: "Sender Address"},
-                            { title: "Value"},
-                            { title: "Timestamp"},
-                            { title: "Block"}],
-                  columnDefs: [ {targets: [1,2,3,4,5], render: $.fn.dataTable.render.ellipsis( 25 )}]
-                } );
-
+              // Initialize DataTable with the new data
+              $('#transactions_table').dataTable({
+                data: transactions,
+                columns: [{ title: "#" },
+                          { title: "Recipient Address"},
+                          { title: "Sender Address"},
+                          { title: "Value"},
+                          { title: "Timestamp"},
+                          { title: "Block"}],
+                columnDefs: [{targets: [1,2,3,4,5], render: $.fn.dataTable.render.ellipsis(25)}]
+              });
             },
             error: function(error){
               console.log(error);
             }
           });
         });
-
-
-      })
-
-
-
-
+      });
     </script>
-
-
 
   </body>
 
